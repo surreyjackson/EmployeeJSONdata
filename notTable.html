@@ -1,0 +1,72 @@
+<style>
+    .employee{
+        border: 2px black solid;
+        border-radius: 25px;
+        padding: 20px;
+        box-shadow: 10px 20px 5px #888888;
+        width: 600px;
+        height: 210px;
+    }
+    .general,.title{
+        font-size: 20;
+        font-weight: bold;
+        float:left;
+    }
+    .eName{
+        text-align: left;
+        float: left;
+        margin-right: 50px;
+        margin-bottom: 5px;
+
+    }
+    img{
+        float: left;
+        clear: left;
+        height: 175px;
+        width: 175px;
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+    .department{
+        clear:right;
+        margin-right: 270px;
+    }
+    .title{
+        clear:right;
+        width: 400px;
+    }
+    .email{
+        clear: both;
+        width:400px;
+    }
+    .bio{
+        float:top;
+    }
+
+</style>
+<body>
+
+</body>
+
+    <script type = "text/javascript" src = "https://d3js.org/d3.v5.min.js"></script>
+    <script>
+        var employeesPromise = d3.json("employee.json");
+        var success = function(employees)
+        {
+            console.log("it worked!",employees);
+            for(var x = 0; x<employees.length; x++)
+                {
+                    addToNotTable(employees[x], x);
+                }
+        }
+        var failure = function(errorMSG)
+        {
+            console.log("It failed!", errorMSG);
+        }
+        var addToNotTable = function(facultyMem, x)  
+        {
+            var name = facultyMem.firstName + " " + facultyMem.lastName;
+                d3.select("body").append("div").html('<div class="employee"><div class="general"><span class="eName">' + name + '</span><img src='+ facultyMem.photo +' /></div><div class="detail"><span class="title">'+facultyMem.title+'</span><span class="department">'+facultyMem.unit+'</span><span class="email">'+facultyMem.email+'</span><p class="bio">'+facultyMem.bio+' </p></div> </div>)');
+        }
+        employeesPromise.then(success,failure);
+    </script>

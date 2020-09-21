@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <style>
+        table{
+            width: 400px;
+            border: 1px solid black;
+            border: collapse;
+        }
+        tr{
+            height:20px;
+            text-align: center;
+        }
+        td{
+            border: 2px solid black;
+        }
+    </style>
+        <table>
+            <td><h2>Name</h2></td><td><h2>Picture</h2></td><td><h2>Title</h2></td><td><h2>Email</h2></td><td><h2>Unit</h2></td><td><h2>Bio</h2></td><td><h2>Phone Number</h2></td>
+        </table>
+    <script type = "text/javascript" src = "https://d3js.org/d3.v5.min.js"></script>
+    <script>
+        var employeesPromise = d3.json("employee.json");
+        var success = function(employees)
+        {
+            console.log("it worked!",employees);
+            for(var x = 0; x<employees.length; x++)
+                {
+                    addToTable(employees[x], x);
+                }
+        }
+        var failure = function(errorMSG)
+        {
+            console.log("It failed!", errorMSG);
+        }
+        var addToTable = function(facultyMem, x)  
+        {
+            var name = facultyMem.firstName + " " + facultyMem.lastName;
+                d3.select("table").append("tr").html("<td>" + name + "</td><td> <img src=" + facultyMem.photo +"></td><td>" + facultyMem.title + "</td><td>" + facultyMem.email + "</td><td>" + facultyMem.unit + "</td><td>"+ facultyMem.bio + "</td><td>" + facultyMem.phone + "</td>");
+        }
+        employeesPromise.then(success,failure);
+    </script>
+    </body>
+</html>
